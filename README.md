@@ -8,24 +8,20 @@ orchestrate the entire process.
 ## Source code structure
 
 ```bash
-├── ansible
-│   ├── playbook.yaml                       <-- Ansible playbook file
-│   ├── requirements.yaml                   <-- Ansible Galaxy requirements containing additional Roles to be used (CIS, Cloudwatch Logs)
-│   └── roles
-│       ├── common                          <-- Upgrades all packages through ``yum``
 ├── buildspec.yml                           <-- CodeBuild spec 
 ├── cloudformation                          <-- Cloudformation to create entire pipeline
 │   └── pipeline.yaml
 ├── packer_WinServer.json                         <-- Packer template for Pipeline
+├── user_data.ps1                        <-- Powershell userdata
+├── bootstrap.ps1                       <-- Powershell needed for WinRM bootstrap
 ```
-
 
 ## Cloudformation template
 
 Cloudformation will create the following resources as part of the AMI Builder for Packer:
 
 * ``cloudformation/pipeline.yaml``
-    + AWS CodeCommit - Git repository
+    + GitHub - Git repository
     + AWS CodeBuild - Downloads Packer and run Packer to build AMI 
     + AWS CodePipeline - Orchestrates pipeline and listen for new commits in CodeCommit
     + Amazon SNS Topic - AMI Builds Notification via subscribed email
@@ -44,9 +40,7 @@ Cloudformation will create the following resources as part of the AMI Builder fo
 
 Region | AMI Builder Launch Template
 ------------------------------------------------- | ---------------------------------------------------------------------------------
-N. Virginia (us-east-1) | [![Launch Stack](images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=us-east-1#/stacks/new?stackName=AMI-Builder-Blogpost&templateURL=https://s3-eu-west-1.amazonaws.com/ami-builder-packer/cloudformation/pipeline.yaml)
-Ireland (eu-west-1) | [![Launch Stack](images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-1#/stacks/new?stackName=AMI-Builder-Blogpost&templateURL=https://s3-eu-west-1.amazonaws.com/ami-builder-packer/cloudformation/pipeline.yaml)
-London (eu-west-2) | [![Launch Stack](images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=eu-west-2#/stacks/new?stackName=AMI-Builder-Blogpost&templateURL=https://s3-eu-west-1.amazonaws.com/ami-builder-packer/cloudformation/pipeline.yaml)
+Sydney (ap-southeast-2) | [![Launch Stack](images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/new?stackName=Windows-AMI-Builder&templateURL=https://dg-windows-ami-builder.s3-ap-southeast-2.amazonaws.com/pipeline.yaml)
 
 **To clone the AWS CodeCommit repository (console)**
 
@@ -54,7 +48,7 @@ London (eu-west-2) | [![Launch Stack](images/deploy-to-aws.png)](https://console
 2.  Choose the AMI-Builder-Blogpost stack, and then choose Output.
 3.  Make a note of the Git repository URL.
 4.  Use git to clone the repository.
-For example: git clone https://git-codecommit.eu-west-1.amazonaws.com/v1/repos/AMI-Builder_repo
+For example: git clone https://github.com/dgulli/ami-builder-packer.git
 
 **To clone the AWS CodeCommit repository (CLI)**
 
