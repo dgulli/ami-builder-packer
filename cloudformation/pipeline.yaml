@@ -22,7 +22,19 @@ Parameters:
     NotificationEmailAddress:
         Type: String
         Description: Email to receive new AMI ID created by AMI Builder
-
+    MasterRepo:
+        Type: String
+        Description: Git Repository
+    MasterBranch:
+        Type: String
+        Description: Git branch to build and deloy
+    GitHubToken:
+      Type: String
+      NoEcho: true
+      Description: GitHub Pat
+    GitHubUser:
+      Type: String
+      Description: Github user to authenticate as
 Metadata: 
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
@@ -228,17 +240,19 @@ Resources:
                   Name: Source
                   Actions:
                     - 
-                      Name: CodeCommitRepo
+                      Name: "GitBundle"
                       ActionTypeId:
                         Category: Source
-                        Owner: AWS
-                        Provider: CodeCommit
+                        Owner: ThirdParty
+                        Provider: GitHub
                         Version: 1
                       Configuration:
-                        RepositoryName: !Sub '${ServiceName}_repo'
-                        BranchName: master
+                        Owner: !Ref GitHubUser
+                        Repo: !Ref MasterRepo
+                        Branch: !Ref MasterBranch
+                        OAuthToken: !Ref GitHubToken
                       OutputArtifacts:
-                        - Name: SourceZip
+                        - Name: GitBundle
                       RunOrder: 1
                 - 
                   Name: Build
@@ -253,7 +267,7 @@ Resources:
                       Configuration:
                         ProjectName: !Ref CodeBuildProject
                       InputArtifacts:
-                        - Name: SourceZip
+                        - Name: GitBundle
                       OutputArtifacts:
                         - Name: BuiltZip
 
