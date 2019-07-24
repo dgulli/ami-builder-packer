@@ -35,6 +35,9 @@ Parameters:
     GitHubUser:
       Type: String
       Description: Github user to authenticate as
+    BuilderSecurityGroup:
+      Type: String
+      Description: Security Group for Codebuild to use packer and WinRM
 Metadata: 
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
