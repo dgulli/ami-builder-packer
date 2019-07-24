@@ -38,6 +38,7 @@
               "Name": "packer-ami-creation-ebs"
           },
           "security_group_ids": [
+              "{{user `BuilderSecurityGroup`}}",
               "{{user `BuilderSecurityGroup`}}"
           ],
           "snapshot_tags": {
