@@ -7,8 +7,7 @@
       "description": "Packer - Windows_Server-2016-English-Full",
       "instance_profile_arn": "role-ec2-ami-creation",
       "subnet": "{{env `BUILD_SUBNET_ID`}}",
-      "vpc": "{{env `BUILD_VPC_ID`}}",
-      "BuilderSecurityGroup": "{{env `BuilderSecurityGroup`}}"
+      "vpc": "{{env `BUILD_VPC_ID`}}"
   },
   "builders": [
       {
@@ -37,13 +36,9 @@
           "run_volume_tags": {
               "Name": "packer-ami-creation-ebs"
           },
-          "security_group_ids": [
-              "{{user `BuilderSecurityGroup`}}",
-              "{{user `BuilderSecurityGroup`}}"
-          ],
           "snapshot_tags": {
               "Name": "{{user `name`}}-Base-{{user `image_version`}}"
-          },
+           },
           "source_ami_filter": {
               "filters": {
                   "virtualization-type": "hvm",
