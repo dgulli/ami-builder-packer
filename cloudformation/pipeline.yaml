@@ -134,7 +134,7 @@ Resources:
                           - 's3:GetObjectVersion'
                           - 's3:PutObject'
                         Resource: !Sub 'arn:aws:s3:::${BuildArtifactsBucket}/*'
-    role-ec2-ami-creation:
+    ec2amicreation:
         Type: AWS::IAM::Role
         Properties:
             Path: '/managed/'
