@@ -19,19 +19,27 @@ Parameters:
         Type: AWS::EC2::Subnet::Id
         Description: Public Subnet ID that AMI Builder will use to launch temporary resource
 
+    BuilderSecurityGroup:
+        Type: AWS::EC2::SecurityGroup::Id
+        Description: The SecurityGroup ID that CodeBuild will use 
+
     NotificationEmailAddress:
         Type: String
         Description: Email to receive new AMI ID created by AMI Builder
+
     MasterRepo:
         Type: String
         Description: Git Repository
+
     MasterBranch:
         Type: String
         Description: Git branch to build and deloy
+
     GitHubToken:
       Type: String
       NoEcho: true
       Description: GitHub Pat
+
     GitHubUser:
       Type: String
       Description: Github user to authenticate as
@@ -62,12 +70,19 @@ Metadata:
     ParameterLabels:
       ServiceName:
         default: "CodeCommit repo and Pipeline name?"
+
       BuilderVPC: 
         default: "Which VPC should I use?"
+
       BuilderPublicSubnet: 
         default: "Which Public Subnet should I use?"
+
+      BuilderSG:
+        default: "What Security Group should codebuild use"
+
       CodeBuildEnvironment: 
         default: "Should I use a different Docker Image?"
+
       NotificationEmailAddress:
         default: "Who should I notify upon completion?"
 
@@ -203,6 +218,13 @@ Resources:
             ServiceRole: !GetAtt CodeBuildServiceRole.Arn
             Source: 
                 Type: CODEPIPELINE
+            VpcConfig:
+                SecurityGroupIds:
+                - !Ref BuilderSG
+                Subnets:
+                - !Ref BuilderPublicSubnet
+                VpcId:
+                - !Ref BuilderVPC
     
     #############
     # Pipeline  #
