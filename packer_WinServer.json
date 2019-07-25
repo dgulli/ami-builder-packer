@@ -15,6 +15,8 @@
           "type": "amazon-ebs",
           "communicator": "winrm",
           "winrm_username": "Administrator",
+          "winrm_use_ssl": true,
+          "winrm_insecure": true,
           "ami_name": "{{user `name`}}-Base-{{user `image_version`}}",
           "ami_description": "{{user `description`}} - Base - {{user `image_version`}}",
           "region": "{{user `aws_region`}}",
@@ -52,7 +54,6 @@
               ],
               "most_recent": true
           },
-          "ssh_interface": "private_ip",
           "subnet_id": "{{user `subnet`}}",
           "tags": {
               "Name": "{{user `name`}}-Base-{{user `image_version`}}",
