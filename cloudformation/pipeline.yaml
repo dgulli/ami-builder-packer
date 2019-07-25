@@ -1,6 +1,11 @@
 AWSTemplateFormatVersion: 2010-09-09
 Parameters:
 
+    NetworkStackName:
+        Description: Name of the VPC creation stack
+        Type: String
+        Default: BaseStack
+    
     ServiceName:
         Type: String
         Default: AMI-Builder
