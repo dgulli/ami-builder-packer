@@ -134,26 +134,8 @@ Resources:
                           - 's3:GetObjectVersion'
                           - 's3:PutObject'
                         Resource: !Sub 'arn:aws:s3:::${BuildArtifactsBucket}/*'
-    ec2amicreation:
-        Type: AWS::IAM::Role
-        Properties:
-            Path: '/managed/'
-            AssumeRolePolicyDocument:
-                Version: '2012-10-17'
-                Statement:
-                  - 
-                    Action: 'sts:AssumeRole'
-                    Effect: Allow
-                    Principal:
-                      Service:
-                        - codebuild.amazonaws.com
-            Policies:
-                - 
-                  PolicyName: PackerAccess
-                  PolicyDocument:
-                    Version: '2012-10-17'
-                    Statement:
                       - 
+                        sid: "PackerAccess"
                         Effect: Allow
                         Action:
                           - 'ec2:AttachVolume'
