@@ -220,11 +220,11 @@ Resources:
                 Type: CODEPIPELINE
             VpcConfig:
                 SecurityGroupIds:
-                - !Ref BuilderSG
+                - !Sub BuilderSG
                 Subnets:
-                - !Ref BuilderPublicSubnet
+                - !Sub BuilderPublicSubnet
                 VpcId:
-                - !Ref BuilderVPC
+                - !Sub BuilderVPC
     
     #############
     # Pipeline  #
