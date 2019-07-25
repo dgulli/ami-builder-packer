@@ -43,6 +43,7 @@ Parameters:
     GitHubUser:
       Type: String
       Description: Github user to authenticate as
+
 Metadata: 
   AWS::CloudFormation::Interface: 
     ParameterGroups: 
@@ -219,12 +220,9 @@ Resources:
             Source: 
                 Type: CODEPIPELINE
             VpcConfig:
-                SecurityGroupIds:
-                - !Sub BuilderSG
-                Subnets:
-                - !Sub BuilderPublicSubnet
-                VpcId:
-                - !Sub BuilderVPC
+                SecurityGroupIds: [!Ref BuilderSecurityGroup]
+                Subnets: [!Ref BuilderPublicSubnet]
+                VpcId: !Ref BuilderVPC
     
     #############
     # Pipeline  #
