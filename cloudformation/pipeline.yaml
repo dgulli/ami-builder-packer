@@ -135,7 +135,7 @@ Resources:
                           - 's3:PutObject'
                         Resource: !Sub 'arn:aws:s3:::${BuildArtifactsBucket}/*'
                       - 
-                        sid: "PackerAccess"
+                        Sid: "PackerAccess"
                         Effect: Allow
                         Action:
                           - 'ec2:AttachVolume'
