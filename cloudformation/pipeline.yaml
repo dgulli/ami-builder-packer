@@ -172,6 +172,14 @@ Resources:
                           - 'ec2:StopInstances'
                           - 'ec2:TerminateInstances'
                         Resource: '*'
+    roleec2amicreation:
+      Type: AWS::IAM::InstanceProfile
+      Properties:
+        InstanceProfileName: 'role-ec2-ami-creation'
+        Path: '/managed'
+        Roles:
+          -  
+            Ref: "CodeBuildServiceRole"
     CodeBuildProject:
         Type: AWS::CodeBuild::Project
         Properties:
