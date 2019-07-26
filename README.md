@@ -1,9 +1,8 @@
 ## Purpose
 
-This Packer AMI Builder creates a new AMI out of the latest Amazon Linux AMI, and also provides a cloudformation template that leverages AWS CodePipeline to 
+This Packer AMI Builder creates a new AMI out of the latest Amazon Windows 2016 AMI, and also provides a cloudformation template that leverages AWS CodePipeline to 
 orchestrate the entire process.
 
-![Packer AMI Builder Diagram](images/ami-builder-diagram.png)
 
 ## Source code structure
 
