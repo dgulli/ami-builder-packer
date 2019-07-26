@@ -8,12 +8,12 @@ orchestrate the entire process.
 
 ```bash
 ├── buildspec.yml                           <-- CodeBuild spec 
-├── CodeBuild_VPC.yml                       <--- VPC for codebuild CFN template, if you dont alreayd have one.
-├── cloudformation                          <-- Cloudformation to create entire pipeline
-│   └── pipeline.yaml
-├── packer_WinServer.json                         <-- Packer template for Pipeline
-├── user_data.ps1                        <-- Powershell userdata
-├── bootstrap.ps1                       <-- Powershell needed for WinRM bootstrap
+├── cloudformation                          
+│   └── pipeline.yaml                       <-- Cloudformation to create entire pipeline
+│   └── CodeBuild_VPC.yml                   <--- VPC for codebuild CFN template, if you dont alreayd have one.
+├── packer_WinServer.json                   <-- Packer template for Pipeline
+├── user_data.ps1                           <-- Powershell userdata
+├── bootstrap.ps1                           <-- Powershell needed for WinRM bootstrap
 ```
 
 ## Cloudformation template
