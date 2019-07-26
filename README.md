@@ -42,37 +42,4 @@ Region | AMI Builder Launch Template
 ------------------------------------------------- | ---------------------------------------------------------------------------------
 Sydney (ap-southeast-2) | [![Launch Stack](images/deploy-to-aws.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-southeast-2#/stacks/new?stackName=Windows-AMI-Builder&templateURL=https://dg-windows-ami-builder.s3-ap-southeast-2.amazonaws.com/pipeline.yaml)
 
-**To clone the AWS CodeCommit repository (console)**
-
-1.  From the AWS Management Console, open the AWS CloudFormation console.
-2.  Choose the AMI-Builder-Blogpost stack, and then choose Output.
-3.  Make a note of the Git repository URL.
-4.  Use git to clone the repository.
-For example: git clone https://github.com/dgulli/ami-builder-packer.git
-
-**To clone the AWS CodeCommit repository (CLI)**
-
-```bash
-# Retrieve CodeCommit repo URL
-git_repo=$(aws cloudformation describe-stacks --query 'Stacks[0].Outputs[?OutputKey==`GitRepository`].OutputValue' --output text --stack-name "AMI-Builder-Blogpost")
-
-# Clone repository locally
-git clone ${git_repo}
-```
-
-Next, we need to copy all files in this repository into the newly cloned Git repository:
-
-* Download [ami-builder-packer ZIP](https://github.com/awslabs/ami-builder-packer/archive/master.zip).
-* Extract and copy the contents to the Git repo
-
-Lastly, commit these changes to your AWS CodeCommit repo and watch the AMI being built through the AWS CodePipeline Console:
-
-```bash
-git add .
-git commit -m "SHIP THIS AMI"
-git push origin master
-```
-
-![AWS CodePipeline Console - AMI Builder Pipeline](images/ami-builder-pipeline.png)
-
 
