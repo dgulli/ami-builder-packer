@@ -195,7 +195,7 @@ Resources:
                           - 'iam:PassRole'
                           - 'ec2:AssociateIamInstanceProfile'
                           - 'ec2:ReplaceIamInstanceProfileAssociation'
-                        Resource: '*'
+                        Resource: 'arn:aws:ec2:*'
     roleec2amicreation:
       Type: AWS::IAM::InstanceProfile
       Properties:
