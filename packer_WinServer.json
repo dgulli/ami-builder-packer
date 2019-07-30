@@ -1,7 +1,7 @@
 {
   "variables": {
       "name": "packer-ami-windows_server-2016-english-full",
-      "image_version": "2018.03.20a",
+      "image_version": "2019.07.1",
       "aws_region": "{{env `AWS_REGION`}}",
       "aws_instance_type": "t2.medium",
       "description": "Packer - Windows_Server-2016-English-Full",
