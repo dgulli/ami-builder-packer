@@ -4,7 +4,7 @@ Description:
 
 Parameters:
   EnvironmentName:
-    Description: An environment name that will be prefixed to resource names
+    Description: A VPC Stack Name that will be prefixed to resource names
     Type: String
 
   VpcCIDR:
@@ -21,6 +21,11 @@ Parameters:
     Description: Please enter the IP range (CIDR notation) for the private subnet in the first Availability Zone
     Type: String
     Default: 10.192.20.0/24
+
+  DomainName:
+    Description: Top-level domain name for resources. Needs to be a valid FQDN
+    Type: String
+
 Resources:
   VPC:
     Type: AWS::EC2::VPC
@@ -128,13 +133,27 @@ Resources:
       GroupName: "no-ingress-sg"
       GroupDescription: "Security group with no ingress rule"
       VpcId: !Ref VPC
-
-  :
-    Type: AWS::EC2::SecurityGroup
+  SubdomainHostedZone:
+    Type: AWS::Route53::HostedZone
     Properties:
-      GroupName: "no-ingress-sg"
-      GroupDescription: "Security group with no ingress rule"
-      VpcId: !Ref VPC
+      HostedZoneConfig:
+        Comment: "Subdomain for VPC"
+      Name: !Ref DomainName
+  
+  DomainNameParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/tld/${AWS::StackName}"
+      Type: String
+      Value:
+        Ref: DomainName
+  DomainIdParam:
+    Type: AWS::SSM::Parameter
+    Properties:
+      Name: !Sub "/hostedzone/${AWS::StackName}"
+      Type: String
+      Value:
+        Ref: SubdomainHostedZone
 
 Outputs:
   VPC:
@@ -160,3 +179,7 @@ Outputs:
   NoIngressSecurityGroup:
     Description: Security group with no ingress rule
     Value: !Ref NoIngressSecurityGroup
+
+  ConfirmedStackName:
+    Description: Quick Reference for the VPC stack name for later use
+    Value: !Sub AWS::StackName

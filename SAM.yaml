@@ -1,0 +1,39 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: Lambda function to enable CFN nag
+Resources:
+  cfnnagpipeline:
+    Type: AWS::Serverless::Application
+    Properties:
+      Location:
+        ApplicationId: arn:aws:serverlessrepo:us-east-1:923120264911:applications/cfn-nag-pipeline
+        SemanticVersion: 0.3.47
+        Role: !GetAtt LambdaRole.Arn
+      Parameters: 
+        # The pattern of bucket names to allow access to read artifacts from.  Recommended value: *
+        PipelineBucketName: "*"
+
+  LambdaRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Path: /
+      Policies:
+      - PolicyName: cfn-nag-function
+        PolicyDocument:
+          Version: 2012-10-17
+          Statement:
+          - Effect: Allow
+            Action:
+            - codepipeline:PutJobFailureResult
+            - codepipeline:PutJobSuccessResult
+            Resource: '*'
+      
